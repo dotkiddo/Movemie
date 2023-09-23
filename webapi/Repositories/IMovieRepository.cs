@@ -12,7 +12,7 @@ namespace webapi.Repositories
         /// </summary>
         /// <param name="movie"></param>
         /// <returns>Id of the newly created movie</returns>
-        public Task<int> CreateAsync(Movie movie);
+        public Task<bool> CreateAsync(Movie movie);
 
         /// <summary>
         /// 

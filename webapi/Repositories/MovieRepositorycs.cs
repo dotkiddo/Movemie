@@ -35,7 +35,7 @@ namespace webapi.Repositories
             }
         }
 
-        public async Task<int> CreateAsync(Movie movie)
+        public async Task<bool> CreateAsync(Movie movie)
         {
             var sql = "INSERT INTO MOVIES (Name, Category, Rating) VALUES (@Name, @Category, @Rating)";
 
@@ -43,15 +43,13 @@ namespace webapi.Repositories
             {
                 try
                 {
-                    var result = await conn.QuerySingleAsync<int>(sql, new { Name = movie.Name, Category = movie.Category, Rating = movie.Rating });
-#warning no idea what it returns if it fails - test a duplicate movie
-                    //if ()
-                    //if (result != 1) return // fail.
-                    return result;
+                    int result = await conn.ExecuteAsync(sql, new { Name = movie.Name, Category = movie.Category, Rating = movie.Rating });
+                    return result == 1;
                 }
-                catch (Exception)
-                {
-                    return -1;
+                catch (Exception ex)
+                { 
+                    // we should log the error using ILogger<MovieRepository>
+                    return false;
                 }                
             }
         }

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Category } from 'src/app/core/models/category.model';
 import { Movie } from 'src/app/core/models/movie.model';
-import { CategoriesService } from 'src/app/core/services/categories.service';
 import { MovieService } from 'src/app/core/services/movie.service';
-//import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @Component({
@@ -14,63 +11,68 @@ import { MovieService } from 'src/app/core/services/movie.service';
 
 export class MovieAddEditComponent {
 @Input() movie! : Movie;
-public categories: Category[] = []
-public movieCategory: string = ""
-public isOtherSelected: boolean = false
 
+existsError : boolean = false;
 
-constructor(
-  private readonly categoriesService: CategoriesService,
-  private readonly movieService: MovieService) { }
+constructor(private readonly movieService: MovieService) { }
 
-ngOnInit() {
-  this.categoriesService.getAll().subscribe((data) => {
-    this.categories = data;
-  });
-
-  if (this.movie){
-    this.movieCategory = this.movie.category;
+ngOnInit() {  
+  if (!this.movie){    
+    this.movie = { id: 0 } as Movie;
   }
-  else{
-    this.movie = { } as Movie;
+  else {
+
   }
 }
 
-onCategoryChanged() : void {
-  this.isOtherSelected = this.movieCategory === "Other";
-  if (this.isOtherSelected) this.movieCategory = "";
+onError(exists: boolean) {
+  if (exists === true){
+    alert('Unable to save your changes: This movie already exists. Please try a different name');
+  } else {    
+    alert('An error occurred while trying to save your changes, please try again');
+  }
 }
 
-onSaveClicked() {
+clearExistsError() {
+  this.existsError = false;
+}
+
+onSubmit() {
   
   if (confirm("Are you sure you want to save your changes?")){
     
-    // if isOtherSelected create new caegory, and then assign the new id accordingly???
+    this.movieService.exists(this.movie.name)
+    .subscribe({
+      next: (data: boolean) => {
+        console.log('finished checking if exists, result returned');
+        let movieExists : boolean = data;
 
-    alert("yes:" + this.movie.id);
-    if (this.movie.id) { // update movie
-      console.log("going to call update");
-      this.movieService.update(this.movie);
-      console.log("called update");
+        if (movieExists === true) {
+          this.existsError = true;
+          this.onError(true);
+        } else {
+          this.existsError = false;
+    
+          if (this.movie.id == 0){
+            console.log("going to call create", this.movie);
+            this.movieService.create(this.movie);
+            console.log("called create");
+          } else {
+            console.log("going to call update", this.movie);
+            this.movieService.update(this.movie);
+            console.log("called update");
+          }
+        }
 
-    }
-    else { // create new movie
-      console.log("going to call create");
-
-      // this.movie.Name = 'test';
-      // this.movie.category = 'test';
-      // this.
-
-      console.log(this.movie);
-      this.movieService.create(this.movie);
-      console.log("called create")
-    }
+      },
+      error: (e) => { 
+        console.error(e);
+        this.onError(false);
+      }
+    });
     
   }
 }
 
 }
 
-
-//#error // on this page still functionality of the save button -> check required?? check confirmation dialog??
-// as well as create category...

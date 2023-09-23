@@ -1,16 +1,19 @@
-<label>Name:</label>
-<input type="text" [(ngModel)]="movie.Name"/>
-
-<label>Category:</label>
-<select [(ngModel)]="movieCategory" (change)="onCategoryChanged()">
-  <option disabled></option>
-  <option *ngFor="let category of categories" value="category.name">{{category.name}}</option>
-  <option value="Other">Other</option>
-</select>
-<input *ngIf="isOtherSelected" [(ngModel)]="movieCategory" placeholder="Enter a new category">
-
-<label>Rating:</label>
-<input type="number" min="1" max="5" [(ngModel)]="movie.rating"/>
-
-<button (click)="onSaveClicked()">Save</button>
-<button routerLink="">Cancel</button>
+<form #addEditMovieForm="ngForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" [(ngModel)]="movie.name" required (input)="clearExistsError()"/>
+  </div>
+  <div>
+    <label for="category">Category:</label>
+    <input type="text" id="category" name="category" [(ngModel)]="movie.category" required/>    
+  </div>
+  <div>
+    <label for="rating">Rating:</label>
+    <input type="number" min="1" max="5" id="rating" name="rating" [(ngModel)]="movie.rating" required/>    
+  </div>
+  <div *ngIf="existsError">
+    Movie already exists.
+  </div>
+  <button type="submit" [disabled]="addEditMovieForm.invalid || existsError">Save</button>
+  <button routerLink="">Cancel</button>
+</form>

@@ -28,7 +28,7 @@ namespace webapi.Services.Movies
             return _moviesRepo.ListRatingCountsAsync();
         }
 
-        public Task<int> CreateAsync(Movie movie)
+        public Task<bool> CreateAsync(Movie movie)
         {
             return _moviesRepo.CreateAsync(movie);
         }

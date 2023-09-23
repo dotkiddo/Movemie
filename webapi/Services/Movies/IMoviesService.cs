@@ -7,7 +7,7 @@ namespace webapi.Services.Movies
     {
         public Task<IEnumerable<Movie>> ListAsync();
 
-        public Task<int> CreateAsync(Movie movie);
+        public Task<bool> CreateAsync(Movie movie);
 
         public Task<bool> ExistsAsync(string movie);
 

@@ -19,8 +19,12 @@ export class MovieService {
            .pipe(map((data) => data));
   }
 
+  exists(movie: string) : Observable<boolean> {
+    return this.http.get<boolean>(`/movies/exists?movie=${movie}`);
+  }
+
   create(movie: Movie): void {
-   this.http.post<Movie>('/movies/create', { movie: movie })
+   this.http.post<Movie>('/movies/create', movie)
             .subscribe(
               (response: any) => {
                 console.log('success: ', response);
@@ -30,7 +34,7 @@ export class MovieService {
   }
 
   update(movie: Movie): void {
-    this.http.put<Movie>('/movies/update', { movie: movie })
+    this.http.put<Movie>('/movies/update', movie)
              .subscribe(
                (response: any) => {
                  console.log('success: ', response);

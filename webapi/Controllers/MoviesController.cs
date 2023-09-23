@@ -35,8 +35,8 @@ namespace webapi.Controllers
         public async Task<ActionResult> Create(Movie movie)
         {
             var result = await _moviesService.CreateAsync(movie);
-            // rather return Created()?
-            return result > 0 ? Ok() : BadRequest();
+            
+            return result ? Ok() : BadRequest();
         }
 
         [HttpGet(Name = "MovieExists")]
