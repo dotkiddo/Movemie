@@ -1,0 +1,16 @@
+<label>Name:</label>
+<input type="text" [(ngModel)]="movie.Name"/>
+
+<label>Category:</label>
+<select [(ngModel)]="movieCategory" (change)="onCategoryChanged()">
+  <option disabled></option>
+  <option *ngFor="let category of categories" value="category.name">{{category.name}}</option>
+  <option value="Other">Other</option>
+</select>
+<input *ngIf="isOtherSelected" [(ngModel)]="movieCategory" placeholder="Enter a new category">
+
+<label>Rating:</label>
+<input type="number" min="1" max="5" [(ngModel)]="movie.rating"/>
+
+<button (click)="onSaveClicked()">Save</button>
+<button routerLink="">Cancel</button>

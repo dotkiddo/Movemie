@@ -1,3 +1,56 @@
+
+```
+
+on this one the strategy now:
+
+1. DbUp.
+
+2 -> identify/name all the calls that the front end will make and create them...
+
+MoviesController
+ListAll?
+	-> what about the filter?
+
+DeleteById
+ListByRating
+
+Create
+
+Update/UpdateById
+
+
+
+RatingsController??? or CategoriesController?
+ListCountsByRating??? nee man....
+
+
+think... if we do categories by id instead of by name.... then what??? 
+then we need the ability to also pull in there.... so also a categorycontroller...
+
+
+///
+
+on the client side... identify the components
+
+
+listmovies / movieslist / moviesgrid / moviesview
+addEditmovies / moviesaddEdit
+
+listratings/ratingslist / ratingsgrid / ratingsview
+
+reports -> categoryrating
+
+```
+
+
+
+
+
+
+
+---
+
+
 # Angularapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.2.

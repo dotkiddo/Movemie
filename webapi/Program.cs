@@ -1,3 +1,8 @@
+using webapi.Extensions;
+using webapi.Repositories;
+using webapi.Services.Categories;
+using webapi.Services.Movies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,7 +12,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+//DI services
+builder.Services.AddScoped<ICategoriesService, CategoriesService>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IMoviesService, MoviesService>();
+builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+
 var app = builder.Build();
+
+// Affect db changes
+app.MigrateDb<Program>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
