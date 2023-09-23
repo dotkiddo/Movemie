@@ -24,8 +24,8 @@ namespace webapi.Controllers
         }
 
         [HttpGet(Name = "ListMovies")]
-        [ProducesResponseType(typeof(IEnumerable<MovieDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<MovieDto>>> List()
+        [ProducesResponseType(typeof(IEnumerable<Movie>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<Movie>>> List()
         {
             var result = await _moviesService.ListAsync();
             return Ok(result);
@@ -35,8 +35,16 @@ namespace webapi.Controllers
         public async Task<ActionResult> Create(Movie movie)
         {
             var result = await _moviesService.CreateAsync(movie);
-
+            // rather return Created()?
             return result > 0 ? Ok() : BadRequest();
+        }
+
+        [HttpGet(Name = "MovieExists")]
+        public async Task<ActionResult<bool>> Exists(string movie)
+        {
+            var result = await _moviesService.ExistsAsync(movie);
+
+            return Ok(result);
         }
 
         [HttpPut(Name = "UpdateMovie")]

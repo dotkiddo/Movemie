@@ -5,7 +5,7 @@ namespace webapi.Repositories
 {
     public interface IMovieRepository
     {
-        public Task<IEnumerable<MovieDto>> ListAsync();
+        public Task<IEnumerable<Movie>> ListAsync();
 
         /// <summary>
         /// 
@@ -23,7 +23,7 @@ namespace webapi.Repositories
 
         public Task<IEnumerable<RatingCount>> ListRatingCountsAsync();
 
-        public Task<IEnumerable<MovieDto>> ListByRatingAsync(int rating);
+        public Task<IEnumerable<Movie>> ListByRatingAsync(int rating);
 
         public Task<bool> ExistsAsync(string name);
     }

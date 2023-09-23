@@ -13,12 +13,12 @@ namespace webapi.Services.Movies
             _moviesRepo = movies;
         }
 
-        public Task<IEnumerable<MovieDto>> ListAsync()
+        public Task<IEnumerable<Movie>> ListAsync()
         {
             return _moviesRepo.ListAsync();
         }
 
-        public Task<IEnumerable<MovieDto>> ListByRatingAsync(int rating)
+        public Task<IEnumerable<Movie>> ListByRatingAsync(int rating)
         {
             return _moviesRepo.ListByRatingAsync(rating);
         }
@@ -30,38 +30,22 @@ namespace webapi.Services.Movies
 
         public Task<int> CreateAsync(Movie movie)
         {
-            //if (String.IsNullOrWhiteSpace(movie.Name)) return; // something
-            //if (await _moviesRepo.ExistsAsync(movie.Name)) return; //something;
-
-            // here you go an search if the ting already exists or not.
-            // repository should not be doing the logic.
-
             return _moviesRepo.CreateAsync(movie);
         }
 
         public Task<bool> UpdateAsync(Movie movie)
         {
-           // if (movie.Id == default) throw new exception??; // something
-
             return _moviesRepo.UpdateAsync(movie);
         }
 
-        public Task<bool> ExistsAsync(string name)
+        public Task<bool> ExistsAsync(string movie)
         {
-           // if (String.IsNullOrWhiteSpace(movie.Name)) throw new Exception(); // something
-
-            return _moviesRepo.ExistsAsync(name);
+            return _moviesRepo.ExistsAsync(movie);
         }
     }
 }
 
-// what else?? -> 
 /**
- * 
- * create's movie
- * filters
- * 
- * the grouping = ratings & count of movies with that rating
  * 
  * finally - the report:  category*rating -> avg rating.
  *                                           total movies within that category

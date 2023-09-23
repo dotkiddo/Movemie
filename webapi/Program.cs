@@ -1,6 +1,5 @@
 using webapi.Extensions;
 using webapi.Repositories;
-using webapi.Services.Categories;
 using webapi.Services.Movies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +13,6 @@ builder.Services.AddSwaggerGen();
 
 
 //DI services
-builder.Services.AddScoped<ICategoriesService, CategoriesService>();
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IMoviesService, MoviesService>();
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 

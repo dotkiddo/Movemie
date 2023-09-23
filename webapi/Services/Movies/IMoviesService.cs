@@ -5,11 +5,11 @@ namespace webapi.Services.Movies
 {
     public interface IMoviesService
     {
-        public Task<IEnumerable<MovieDto>> ListAsync();
+        public Task<IEnumerable<Movie>> ListAsync();
 
         public Task<int> CreateAsync(Movie movie);
 
-        public Task<bool> ExistsAsync(string name);
+        public Task<bool> ExistsAsync(string movie);
 
         public Task<bool> UpdateAsync(Movie movie);
 
