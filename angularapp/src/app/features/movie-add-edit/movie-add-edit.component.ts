@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Movie } from 'src/app/core/models/movie.model';
 import { MovieService } from 'src/app/core/services/movie.service';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-movie-add-edit',
@@ -10,18 +10,22 @@ import { MovieService } from 'src/app/core/services/movie.service';
 })
 
 export class MovieAddEditComponent {
-@Input() movie! : Movie;
+public movie: Movie = { } as Movie
 
 existsError : boolean = false;
 
-constructor(private readonly movieService: MovieService) { }
+constructor(
+  private readonly movieService: MovieService,
+  private location: Location)
+  { 
+
+  }
 
 ngOnInit() {  
-  if (!this.movie){    
-    this.movie = { id: 0 } as Movie;
-  }
-  else {
-
+  const state = this.location.getState() as { data: Movie, navigationId: number};
+  
+  if (state.data) {
+    this.movie = state.data;
   }
 }
 
@@ -53,14 +57,10 @@ onSubmit() {
         } else {
           this.existsError = false;
     
-          if (this.movie.id == 0){
-            console.log("going to call create", this.movie);
+          if (!this.movie.id){
             this.movieService.create(this.movie);
-            console.log("called create");
           } else {
-            console.log("going to call update", this.movie);
             this.movieService.update(this.movie);
-            console.log("called update");
           }
         }
 
@@ -75,4 +75,3 @@ onSubmit() {
 }
 
 }
-

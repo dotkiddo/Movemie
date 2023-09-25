@@ -21,6 +21,9 @@ namespace webapi.Repositories
         /// <returns>Success indicator</returns>
         public Task<bool> UpdateAsync(Movie movie);
 
+        public Task<bool> DeleteAsync(int id);
+
+
         public Task<IEnumerable<RatingCount>> ListRatingCountsAsync();
 
         public Task<IEnumerable<Movie>> ListByRatingAsync(int rating);

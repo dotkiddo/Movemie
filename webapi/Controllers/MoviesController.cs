@@ -53,6 +53,12 @@ namespace webapi.Controllers
             return await _moviesService.UpdateAsync(movie) ? Ok() : BadRequest();
         }
 
+        [HttpDelete(Name = "DeleteMovie")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            return await _moviesService.DeleteAsync(id) ? Ok() : BadRequest();
+        }
+
         [HttpGet(Name = "RatingCounts")]
         public async Task<IEnumerable<RatingCount>> RatingCounts()
         {

@@ -54,6 +54,18 @@ namespace webapi.Repositories
             }
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var sql = "DELETE FROM Movies WHERE Id = @Id";
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                var result = await conn.ExecuteAsync(sql, new { Id = id });
+
+                return result == 1;
+            }
+        }
+
         public async Task<IEnumerable<Movie>> ListAsync()
         {
             string sql = @"SELECT Id, Name, Category, Rating FROM Movies ";
@@ -67,7 +79,7 @@ namespace webapi.Repositories
 
         public async Task<IEnumerable<RatingCount>> ListRatingCountsAsync()
         {
-            var sql = @"SELECT Rating, COUNT(Id)
+            var sql = @"SELECT Rating, COUNT(Id) Count
                         FROM Movies
                         GROUP BY Rating";
 

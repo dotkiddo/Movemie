@@ -13,6 +13,9 @@ namespace webapi.Services.Movies
 
         public Task<bool> UpdateAsync(Movie movie);
 
+        public Task<bool> DeleteAsync(int id);
+
+
         public Task<IEnumerable<RatingCount>> ListRatingCountsAsync();
     }
 }

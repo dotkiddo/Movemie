@@ -38,6 +38,11 @@ namespace webapi.Services.Movies
             return _moviesRepo.UpdateAsync(movie);
         }
 
+        public Task<bool> DeleteAsync(int id)
+        {
+            return _moviesRepo.DeleteAsync(id);
+        }
+
         public Task<bool> ExistsAsync(string movie)
         {
             return _moviesRepo.ExistsAsync(movie);

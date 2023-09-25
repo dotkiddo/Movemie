@@ -4,6 +4,7 @@ import { map } from "rxjs/operators";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 
 import { Movie } from "../models/movie.model";
+import { RatingCount } from '../models/rating-count.model';
 
 
 @Injectable({
@@ -41,5 +42,16 @@ export class MovieService {
                },
                (error: HttpErrorResponse) => {console.error('Error: ', error);}
              );
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`/movies/delete?id=${id}`)
+  }
+
+  ratingCounts() : Observable<RatingCount[]>{
+
+    return this.http.get<RatingCount[]>('/movies/ratingcounts')
+            .pipe(map((data) => data));
+
   }
 }
